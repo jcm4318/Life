@@ -170,8 +170,8 @@ bmp-size   @ 3 * 54 +       bmp-length !       { Find length of bmp in chars inc
   ;
 
 : Calc-bmp-White  ( addr -- )            { Set bmp starting at addr to random blue pixels }
-  dup print-stack dup 2 + @ + swap 54 + dup rot rot do
-  print-stack bmp-address @ dup print-stack dup 2 + @ + swap 54 +
+  dup dup 2 + @ + swap 54 + dup rot rot do
+  bmp-address @ dup dup 2 + @ + swap 54 +
   life-array swap I swap - 3 / + c@ 1 =
   if
   255                                     { Red   RGB value                                }
