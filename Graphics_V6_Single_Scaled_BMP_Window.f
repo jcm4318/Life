@@ -47,9 +47,9 @@ variable bmp-y-start    { Initial y position of upper left corner               
 
 variable bmp-window-handle  { Variable to store the handle used to ID display window     }
 
-4 bmp-x-size !                              { Set x size of bmp in pixels             }
+num-cols bmp-x-size !                              { Set x size of bmp in pixels             }
 
-4 bmp-y-size !                              { Set y size of bmp in pixels             }
+num-cols bmp-y-size !                              { Set y size of bmp in pixels             }
 
 bmp-x-size @ 4 / 1 max 4 *  bmp-x-size !       { Trim x-size to integer product of 4     }
 
@@ -115,8 +115,7 @@ bmp-size   @ 3 * 54 +       bmp-length !       { Find length of bmp in chars inc
    cr ." Created Test bmp " cr
    ;
 
-
-   Setup-Test-Memory  
+Setup-Test-Memory  
 
 
 { --------------------------- Basic Words to Color bmp Pixels -----------------------------}
@@ -174,9 +173,9 @@ bmp-size   @ 3 * 54 +       bmp-length !       { Find length of bmp in chars inc
   bmp-address @ dup dup 2 + @ + swap 54 +
   life-array swap I swap - 3 / + c@ 1 =
   if
-  255                                     { Red   RGB value                                }
-  255                                     { Green RGB value                                }
-  255                                     { Blue  RGB value                                }
+  000                                     { Red   RGB value                                }
+  128                                     { Green RGB value                                }
+  128                                     { Blue  RGB value                                }
   else
   000
   000
@@ -185,8 +184,8 @@ bmp-size   @ 3 * 54 +       bmp-length !       { Find length of bmp in chars inc
   i  tuck c!
   1+ tuck c!
   1+      c!      
-  3 +loop
-  ;
+  drop
+  3 +loop drop ;
 
 { ---------------------- Word to display a bmp using Windows API Calls ------------------  }
 
@@ -365,13 +364,3 @@ bmp-APP-CLASS                   { Call class for displaying bmp's in a child win
   bmp-address @ Calc-bmp-White        { Add random pixels to .bmp in memory             }
   bmp-address @ bmp-to-screen-stretch { Stretch .bmp to display window                  }
   ;
-
-{ ----------------------------- Run Test Output Routines -------------------------------- }
-
-
-\  go-copy  { Demo copy to screen routine }
-
-\  go-stretch  { Demo stretch to screen routine }
-
-
-
